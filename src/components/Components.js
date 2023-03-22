@@ -1,7 +1,3 @@
-import { useContext } from 'react';
-import {OptionContext} from "../pages/product-add-page";
-
-
 export const headerData = {
 	product_add_page: {
 		header_text: "Product Add",
@@ -31,50 +27,70 @@ export const headerData = {
 	}
 }
 
-const inputElems = {
+export const inputElementData = {
 	sku: {
 		text: 'SKU',
 		id: 'sku',
-		inputType: 'text'
+		inputType: 'text',
+		name: 'product_sku'
 	},
 	name: {
 		text: 'Name',
 		id: 'name',
-		inputType: 'text'
+		inputType: 'text',
+		name: 'product_name'
 	},
 	price: {
 		text: 'Price ($)',
 		id: 'price',
-		inputType: 'number'
+		inputType: 'number',
+		min: 0,
+		step: 'any',
+		name: 'product_price'
 	},
 	size: {
 		text: 'Size (MB)',
 		id: 'size',
-		inputType: 'number'
+		inputType: 'number',
+		min: 0,
+		step: 'any',
+		name: 'product_size'
 	},
 	height: {
 		text: 'Height (CM)',
 		id: 'height',
-		inputType: 'number'
+		inputType: 'number',
+		min: 0,
+		step: 'any',
+		name: 'product_height'
 	},
 	width: {
 		text: 'Width (CM)',
 		id: 'width',
-		inputType: 'number'
+		inputType: 'number',
+		min: 0,
+		step: 'any',
+		name: 'product_width'
 	},
 	length: {
 		text: 'Length (CM)',
 		id: 'length',
-		inputType: 'number'
+		inputType: 'number',
+		min: 0,
+		step: 'any',
+		name: 'product_length'
 	},
 	weight: {
 		text: 'Weight (KG)',
 		id: 'weight',
-		inputType: 'number'
+		inputType: 'number',
+		min: 0,
+		step: 'any',
+		name: 'product_weight'
 	}
 };
 
-const productTypes = {
+export const productTypes = {
 	dvd: {
 		component: <DVDField/>,
 		text: 'DVD',
@@ -106,46 +122,16 @@ export function Button(props) {
 	)
 };
 
-export function ProductAddForm() {
-	const {optionValue} = useContext(OptionContext);
-	return (
-		<main className='mx-3'>
-			<form id='product_form' method='post'>
-				<InputElem elem={inputElems.sku}/>
-				<InputElem elem={inputElems.name}/>
-				<InputElem elem={inputElems.price}/>
-				<SelectElem/>
-				{optionValue && productTypes[optionValue].component}
-			</form>
-		</main>
-	)
-};
-
-export function InputElem(props) {
+export function InputElement(props) {
 	return (
 	<div className='mb-3'>
 		<label className='input-labels' htmlFor={props.elem.id}>{props.elem.text}</label>
-		<input id={props.elem.id} type={props.elem.inputType} required></input>
+		<input id={props.elem.id} name={props.elem.name} type={props.elem.inputType} min={props.elem.min} step={props.elem.step} required></input>
 	</div>
 )
 };
 
-export function SelectElem() {
-	const {setOptionValue, optionValue} = useContext(OptionContext);
-	return (
-		<div className='mb-3'>
-			<label htmlFor='productType' className='me-3 input-labels'>Type Switcher</label>
-			<select id='productType' value={optionValue} onChange={(event) => {setOptionValue(event.target.value)}} required>
-				<option value='' disabled>Product Type</option>
-				<TypeSwitcher product={productTypes.dvd}/>
-				<TypeSwitcher product={productTypes.book}/>
-				<TypeSwitcher product={productTypes.furniture}/>
-			</select>
-		</div>
-	)
-};
-
-export function TypeSwitcher(props) {
+export function ProductTypeOption(props) {
 	return (
 		<option value={props.product.value} id={props.product.id}>{props.product.text}</option>
 	)
@@ -160,7 +146,7 @@ export function Description(props) {
 export function DVDField() {
 	return (
 		<div>
-			<InputElem elem={inputElems.size}/>
+			<InputElement elem={inputElementData.size}/>
 			<Description note={productTypes.dvd}/>
 		</div>
 	)
@@ -169,9 +155,9 @@ export function DVDField() {
 export function FurnitureField() {
 	return (
 		<div>
-			<InputElem elem={inputElems.length}/>
-			<InputElem elem={inputElems.width}/>
-			<InputElem elem={inputElems.height}/>
+			<InputElement elem={inputElementData.length}/>
+			<InputElement elem={inputElementData.width}/>
+			<InputElement elem={inputElementData.height}/>
 			<Description note={productTypes.furniture}/>
 		</div>
 	)
@@ -180,7 +166,7 @@ export function FurnitureField() {
 export function BookField() {
 	return (
 		<div>
-			<InputElem elem={inputElems.weight}/>
+			<InputElement elem={inputElementData.weight}/>
 			<Description note={productTypes.book}/>
 		</div>
 	)

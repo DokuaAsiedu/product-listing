@@ -39,6 +39,10 @@ input, select {
 	font-size: 0.75em;
 }
 
+.item {
+	background-color: bisque;
+}
+
 a {
 	all: unset;
 }
