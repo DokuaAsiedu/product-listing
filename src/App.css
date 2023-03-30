@@ -45,6 +45,12 @@ input, select {
 	width: 7rem;
 }
 
+#sku-check {
+	font-size: 0.75em;
+	color: red;
+	vertical-align: baseline;
+}
+
 #description {
 	font-size: 0.75em;
 }

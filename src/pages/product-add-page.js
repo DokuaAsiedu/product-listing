@@ -1,6 +1,6 @@
 import '../App.css';
-import { useState, useMemo, createContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, createContext, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, InputElement, ProductTypeOption, Footer, headerData, inputElementData, productTypes, ProductTypeDetails } from "../components/Components";
 import axios from 'axios';
 
@@ -8,6 +8,7 @@ export const DetailsContext = createContext({});
 
 
 export default function ProductAddPage() {
+	const navigate = useNavigate();
 
 	const [formDetails, setFormDetails] = useState({
 		productSKU: '',
@@ -18,51 +19,88 @@ export default function ProductAddPage() {
 
 	const [productTypeDetails, setProductTypeDetails] = useState({});
 
-	// const mainData = useMemo(() => ({}), []);
-	// var productTypeData = useMemo(() => ({}), [formDetails.productType]);
+	const [skuExistsence, setSKUExistsence] = useState('');
+
+	// useEffect(() => {
+	// 	axios.post(
+	// 		"http://localhost:8000/check-sku-existence.php", 
+	// 		[formDetails.productSKU],
+	// 		{headers: {
+	// 			'Content-Type' : 'application/x-www-form-urlencoded'
+	// 		}
+	// 	})
+	// 	.then(response => {
+	// 		console.log(response.data);
+	// 		setSKUExistsence(() => response.data)
+	// 		console.log(skuExistsence);
+	// 	})
+	// 	.catch(error => {console.log(error)})
+	// }, [formDetails.productSKU])
 
 	const setDetails = event => {
 		setProductTypeDetails(prevState => ({...prevState, [event.target.name]: event.target.value}));
-		// productTypeData[`${event.target.name}`] = event.target.value;
 	}
 
 	const setProductSKU = (event) => {
 		setFormDetails((previousState) => ({...previousState, productSKU: event.target.value}));
-		// mainData[`${event.target.name}`] = event.target.value;
+		axios.post(
+			"http://localhost:8000/check-sku-existence.php", 
+			[event.target.value],
+			{headers: {
+				'Content-Type' : 'application/x-www-form-urlencoded'
+			}
+		})
+		.then(response => {
+			console.log(response.data);
+			setSKUExistsence(() => response.data)
+			console.log(skuExistsence);
+		})
+		.catch(error => {console.log(error)})
 	}
 
 	const setProductName = (event) => {
 		setFormDetails((previousState) => ({...previousState, productName: event.target.value}));
-		// mainData[`${event.target.name}`] = event.target.value;
 	}
 
 	const setProductPrice = (event) => {
 		setFormDetails((previousState) => ({...previousState, productPrice: event.target.value}));
-		// mainData[`${event.target.name}`] = event.target.value;
 	}
 
 	const setProductType = (event) => {
 		setFormDetails((previousState) => ({...previousState, productType: event.target.value}));
 		setProductTypeDetails(() => ({}));
-		// productTypeData = {};
-		// mainData[`${event.target.name}`] = event.target.value;
 	}
-
-	// useEffect(() => {
-	// 	console.log(productTypeDetails)
-	// }, [productTypeDetails])
-
-
 
 	const handleSave = (event) => {
 		event.preventDefault();
-		axios.post("http://localhost:8000/product-add.php",
-		Object.assign({}, formDetails, productTypeDetails),
-		{headers: {
-			'Content-Type' : 'application/x-www-form-urlencoded'
-		}})
-		.then(response => {console.log(response.data)})
-		.catch(error => {console.log(error)})
+		if (!skuExistsence) {
+			axios.post("http://localhost:8000/product-add.php",
+			Object.assign({}, formDetails, {measurements: productTypeDetails}),
+			{headers: {
+				'Content-Type' : 'application/x-www-form-urlencoded'
+			}
+			})
+			.then(response => {
+				console.log(response.data)
+				navigate('/');
+			})
+			.catch(error => {
+				console.log(error)
+			})
+		}
+		// axios.post("http://localhost:8000/product-add.php",
+		// 	Object.assign({}, formDetails, {measurements: productTypeDetails}),
+		// 	{headers: {
+		// 		'Content-Type' : 'application/x-www-form-urlencoded'
+		// 	}
+		// })
+		// .then(response => {
+		// 	console.log(response.data)
+		// 	navigate('/');
+		// })
+		// .catch(error => {
+		// 	console.log(error)
+		// })
 	}
 
 	return (
@@ -78,7 +116,10 @@ export default function ProductAddPage() {
 			<hr/>
 			<main className='main mx-3'>
 				<form id='product_form' onSubmit={handleSave}>
-					<InputElement elem={inputElementData.sku} value={formDetails.productSKU} fxn={setProductSKU}/>
+					<div className='d-flex flex-row justify-content-start align-items-start'>
+						<InputElement elem={inputElementData.sku} value={formDetails.productSKU} fxn={setProductSKU}/>
+						{skuExistsence && <span id='sku-check' className='ms-1'>* This SKU already exists</span>}
+					</div>
 					<InputElement elem={inputElementData.name} value={formDetails.productName} fxn={setProductName}/>
 					<InputElement elem={inputElementData.price} value={formDetails.productPrice} fxn={setProductPrice}/>
 					<div className='type-switcher mb-3'>
