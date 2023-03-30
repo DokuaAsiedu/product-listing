@@ -18,46 +18,46 @@ export default function ProductAddPage() {
 
 	const [productTypeDetails, setProductTypeDetails] = useState({});
 
-	const mainData = useMemo(() => ({}), []);
-	var productTypeData = useMemo(() => ({}), [formDetails.productType]);
+	// const mainData = useMemo(() => ({}), []);
+	// var productTypeData = useMemo(() => ({}), [formDetails.productType]);
 
 	const setDetails = event => {
 		setProductTypeDetails(prevState => ({...prevState, [event.target.name]: event.target.value}));
-		productTypeData[`${event.target.name}`] = event.target.value;
+		// productTypeData[`${event.target.name}`] = event.target.value;
 	}
 
 	const setProductSKU = (event) => {
 		setFormDetails((previousState) => ({...previousState, productSKU: event.target.value}));
-		mainData[`${event.target.name}`] = event.target.value;
+		// mainData[`${event.target.name}`] = event.target.value;
 	}
 
 	const setProductName = (event) => {
 		setFormDetails((previousState) => ({...previousState, productName: event.target.value}));
-		mainData[`${event.target.name}`] = event.target.value;
+		// mainData[`${event.target.name}`] = event.target.value;
 	}
 
 	const setProductPrice = (event) => {
 		setFormDetails((previousState) => ({...previousState, productPrice: event.target.value}));
-		mainData[`${event.target.name}`] = event.target.value;
+		// mainData[`${event.target.name}`] = event.target.value;
 	}
 
 	const setProductType = (event) => {
 		setFormDetails((previousState) => ({...previousState, productType: event.target.value}));
-		// setProductTypeDetails(() => ({}));
-		productTypeData = {};
-		mainData[`${event.target.name}`] = event.target.value;
+		setProductTypeDetails(() => ({}));
+		// productTypeData = {};
+		// mainData[`${event.target.name}`] = event.target.value;
 	}
 
-	useEffect(() => {
-		console.log(productTypeData)
-	}, [productTypeData])
+	// useEffect(() => {
+	// 	console.log(productTypeDetails)
+	// }, [productTypeDetails])
 
 
 
 	const handleSave = (event) => {
 		event.preventDefault();
 		axios.post("http://localhost:8000/product-add.php",
-		Object.assign({}, mainData, productTypeData),
+		Object.assign({}, formDetails, productTypeDetails),
 		{headers: {
 			'Content-Type' : 'application/x-www-form-urlencoded'
 		}})
