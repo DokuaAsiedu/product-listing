@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500&display=swap');
 
-* {
+*, p {
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
@@ -10,8 +10,18 @@ body {
 	font-family: 'Plus Jakarta Sans';
 }
 
+#root {
+	width: 100vw;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
 .wrapper {
 	margin: 1rem 3rem;
+	max-width: 1000px;
+	width: 100%;
 }
 
 header > *:not(:last-child) {
@@ -39,8 +49,28 @@ input, select {
 	font-size: 0.75em;
 }
 
-.item {
-	background-color: bisque;
+.list-container {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	text-align: center;
+	gap: 1em;
+	width: 100%;
+}
+
+.list-item {
+	word-wrap: break-word;
+	border: 3px solid black;
+	padding: 1em;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+}
+
+.delete-checkbox {
+	position: absolute;
+	top: 0.5em;
+	left: 0.5em;
 }
 
 a {

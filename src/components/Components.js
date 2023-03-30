@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { DetailsContext } from "../pages/product-add-page";
+
 export const headerData = {
 	product_add_page: {
 		header_text: "Product Add",
@@ -17,12 +20,13 @@ export const headerData = {
 		add: {
 			text: 'Add',
 			type: 'button',
-			link: 'add-product-page'
+			link: 'product-add-page'
 		},
 		mass_delete: {
 			text: 'Mass Delete',
-			type: 'button',
-			id: 'delete-product-btn'
+			type: 'submit',
+			id: 'delete-product-btn',
+			form: 'delete-form'
 		}
 	}
 }
@@ -45,7 +49,7 @@ export const inputElementData = {
 		id: 'price',
 		inputType: 'number',
 		min: 0,
-		step: 'any',
+		step: '0.01',
 		name: 'product_price'
 	},
 	size: {
@@ -53,7 +57,6 @@ export const inputElementData = {
 		id: 'size',
 		inputType: 'number',
 		min: 0,
-		step: 'any',
 		name: 'product_size'
 	},
 	height: {
@@ -61,7 +64,6 @@ export const inputElementData = {
 		id: 'height',
 		inputType: 'number',
 		min: 0,
-		step: 'any',
 		name: 'product_height'
 	},
 	width: {
@@ -69,7 +71,6 @@ export const inputElementData = {
 		id: 'width',
 		inputType: 'number',
 		min: 0,
-		step: 'any',
 		name: 'product_width'
 	},
 	length: {
@@ -77,7 +78,6 @@ export const inputElementData = {
 		id: 'length',
 		inputType: 'number',
 		min: 0,
-		step: 'any',
 		name: 'product_length'
 	},
 	weight: {
@@ -85,7 +85,6 @@ export const inputElementData = {
 		id: 'weight',
 		inputType: 'number',
 		min: 0,
-		step: 'any',
 		name: 'product_weight'
 	}
 };
@@ -126,7 +125,7 @@ export function InputElement(props) {
 	return (
 	<div className='mb-3'>
 		<label className='input-labels' htmlFor={props.elem.id}>{props.elem.text}</label>
-		<input id={props.elem.id} name={props.elem.name} type={props.elem.inputType} min={props.elem.min} step={props.elem.step} required></input>
+		<input id={props.elem.id} name={props.elem.name} type={props.elem.inputType} min={props.elem.min} step={props.elem.step} onChange={props.fxn} value={props.value} required></input>
 	</div>
 )
 };
@@ -143,30 +142,40 @@ export function Description(props) {
 	)
 };
 
+export function ProductTypeDetails(props) {
+	return (props.productTypeField)
+}
+
 export function DVDField() {
+	const [productTypeDetails, setDetails] = useContext(DetailsContext);
+
 	return (
 		<div>
-			<InputElement elem={inputElementData.size}/>
+			<InputElement elem={inputElementData.size} fxn={setDetails} value={productTypeDetails[`${this}`]}/>
 			<Description note={productTypes.dvd}/>
 		</div>
 	)
 };
 
 export function FurnitureField() {
+	const [productTypeDetails, setDetails] = useContext(DetailsContext);
+
 	return (
 		<div>
-			<InputElement elem={inputElementData.length}/>
-			<InputElement elem={inputElementData.width}/>
-			<InputElement elem={inputElementData.height}/>
+			<InputElement elem={inputElementData.length} fxn={setDetails} value={productTypeDetails[`${this}`]}/>
+			<InputElement elem={inputElementData.width} fxn={setDetails} value={productTypeDetails[`${this}`]}/>
+			<InputElement elem={inputElementData.height} fxn={setDetails} value={productTypeDetails[`${this}`]}/>
 			<Description note={productTypes.furniture}/>
 		</div>
 	)
 };
 
 export function BookField() {
+	const [productTypeDetails, setDetails] = useContext(DetailsContext);
+
 	return (
 		<div>
-			<InputElement elem={inputElementData.weight}/>
+			<InputElement elem={inputElementData.weight} fxn={setDetails} value={productTypeDetails[`${this}`]}/>
 			<Description note={productTypes.book}/>
 		</div>
 	)
