@@ -28,7 +28,7 @@ export default function ProductAddPage() {
 	const setProductSKU = (event) => {
 		setFormDetails((previousState) => ({...previousState, productSKU: event.target.value}));
 		axios.post(
-			"http://localhost:8000/check-sku-existence.php", 
+			"https://dokua-product-listing-server.herokuapp.com/check-sku-existence.php",
 			[event.target.value],
 			{headers: {
 				'Content-Type' : 'application/x-www-form-urlencoded'
@@ -58,7 +58,7 @@ export default function ProductAddPage() {
 	const handleSave = (event) => {
 		event.preventDefault();
 		if (!skuExistsence) {
-			axios.post("http://localhost:8000/product-add.php",
+			axios.post("https://dokua-product-listing-server.herokuapp.com/product-add.php",
 			Object.assign({}, formDetails, {measurements: productTypeDetails}),
 			{headers: {
 				'Content-Type' : 'application/x-www-form-urlencoded'

@@ -20,8 +20,8 @@ export default function ProductListPage() {
 		event.preventDefault();
 		axios
 		.post(
-			"http://localhost:8000/product-delete.php", 
-			deleteItems, 
+			"https://dokua-product-listing-server.herokuapp.com/product-delete.php",
+			deleteItems,
 			{headers: {
 				'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
 			}})
@@ -31,7 +31,7 @@ export default function ProductListPage() {
 
 	useEffect(() => {
 		axios
-		.get("http://localhost:8000/product-list.php")
+		.get("https://dokua-product-listing-server.herokuapp.com/product-list.php")
 		.then((response) => {
 			setProductList(response.data);
 		})

@@ -18,12 +18,12 @@ export const headerData = {
 	product_list_page: {
 		header_text: "Product List",
 		add: {
-			text: 'Add',
+			text: 'ADD',
 			type: 'button',
 			link: 'product-add-page'
 		},
 		mass_delete: {
-			text: 'Mass Delete',
+			text: 'MASS DELETE',
 			type: 'submit',
 			id: 'delete-product-btn',
 			form: 'delete-form'
@@ -115,7 +115,7 @@ export const productTypes = {
 
 export function Button(props) {
 	return (
-		<button id={props.elem.id} form={props.elem.form} type={props.elem.type} className='bg-white px-2'>
+		<button id={props.elem.id} form={props.elem.form} type={props.elem.type}>
 			{props.elem.text}
 		</button>
 	)
@@ -162,9 +162,9 @@ export function FurnitureField() {
 
 	return (
 		<div>
-			<InputElement elem={inputElementData.length} fxn={setDetails} value={productTypeDetails[`${this}`]}/>
-			<InputElement elem={inputElementData.width} fxn={setDetails} value={productTypeDetails[`${this}`]}/>
 			<InputElement elem={inputElementData.height} fxn={setDetails} value={productTypeDetails[`${this}`]}/>
+			<InputElement elem={inputElementData.width} fxn={setDetails} value={productTypeDetails[`${this}`]}/>
+			<InputElement elem={inputElementData.length} fxn={setDetails} value={productTypeDetails[`${this}`]}/>
 			<Description note={productTypes.furniture}/>
 		</div>
 	)
