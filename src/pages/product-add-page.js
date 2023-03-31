@@ -1,5 +1,5 @@
 import '../App.css';
-import { useState, createContext, useEffect } from 'react';
+import { useState, createContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, InputElement, ProductTypeOption, Footer, headerData, inputElementData, productTypes, ProductTypeDetails } from "../components/Components";
 import axios from 'axios';
@@ -20,22 +20,6 @@ export default function ProductAddPage() {
 	const [productTypeDetails, setProductTypeDetails] = useState({});
 
 	const [skuExistsence, setSKUExistsence] = useState('');
-
-	// useEffect(() => {
-	// 	axios.post(
-	// 		"http://localhost:8000/check-sku-existence.php", 
-	// 		[formDetails.productSKU],
-	// 		{headers: {
-	// 			'Content-Type' : 'application/x-www-form-urlencoded'
-	// 		}
-	// 	})
-	// 	.then(response => {
-	// 		console.log(response.data);
-	// 		setSKUExistsence(() => response.data)
-	// 		console.log(skuExistsence);
-	// 	})
-	// 	.catch(error => {console.log(error)})
-	// }, [formDetails.productSKU])
 
 	const setDetails = event => {
 		setProductTypeDetails(prevState => ({...prevState, [event.target.name]: event.target.value}));
@@ -88,19 +72,6 @@ export default function ProductAddPage() {
 				console.log(error)
 			})
 		}
-		// axios.post("http://localhost:8000/product-add.php",
-		// 	Object.assign({}, formDetails, {measurements: productTypeDetails}),
-		// 	{headers: {
-		// 		'Content-Type' : 'application/x-www-form-urlencoded'
-		// 	}
-		// })
-		// .then(response => {
-		// 	console.log(response.data)
-		// 	navigate('/');
-		// })
-		// .catch(error => {
-		// 	console.log(error)
-		// })
 	}
 
 	return (

@@ -1,8 +1,6 @@
 <?php
 header('Access-Control-Allow-Origin: http://localhost:3000');
 
-// require "database-connection.php";
-// require "initializations.php";
 require "set-product-list.php";
 
 if (isset($_POST)) {

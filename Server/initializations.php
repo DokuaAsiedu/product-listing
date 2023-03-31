@@ -1,6 +1,4 @@
 <?php
-// require "database-connection.php";
-
 class Product {
 	public $product_type, $product_sku, $product_name, $product_price;
 
@@ -36,7 +34,6 @@ class Product {
 
 class DVD extends Product {
 	public $dvd_size;
-	// public $measurement;
 
 	function __construct() {
 		$this->measurement = "Size: $this->dvd_size MB";
@@ -49,7 +46,6 @@ class DVD extends Product {
 
 class Book extends Product {
 	public $book_weight;
-	// public $measurement;
 
 	function __construct() {
 		$this->measurement = "Weight: {$this->book_weight}KG";
@@ -62,7 +58,6 @@ class Book extends Product {
 
 class Furniture extends Product {
 	public $furniture_height, $furniture_width, $furniture_length;
-	// public $measurement;
 
 	function __construct() {
 		$this->measurement = "Dimensions: {$this->furniture_height}x{$this->furniture_width}x{$this->furniture_length}";
